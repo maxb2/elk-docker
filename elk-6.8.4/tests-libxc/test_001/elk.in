@@ -1,0 +1,39 @@
+
+tasks
+  0
+  500
+
+test
+ .true.
+
+maxscl
+  2
+
+! set additional options required for meta-GGA
+metagga
+ .true.
+
+! regularised SCAN
+xctype
+  100 493 494
+
+ngridk
+  4 4 4
+
+avec
+  5.3435  5.3435  0.0000
+  5.3435  0.0000  5.3435
+  0.0000  5.3435  5.3435
+
+sppath
+ '../../species/'
+
+atoms
+  2                                   : nspecies
+  'Ga.in'                             : spfname
+  1                                   : natoms; atposl below
+  0.0  0.0  0.0
+  'As.in'
+  1
+  0.25  0.25  0.25
+
