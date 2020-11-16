@@ -1,14 +1,14 @@
 
 MAKE = make
 F90 = gfortran
-F90_OPTS = -O3 -ffast-math -funroll-loops -fopenmp
+F90_OPTS = -O3 -ffast-math -funroll-loops -fopenmp  -m64 -I/usr/include/mkl
 F77 = gfortran
-F77_OPTS = -O3 -ffast-math -funroll-loops -fopenmp
+F77_OPTS = -O3 -ffast-math -funroll-loops -fopenmp  -m64 -I/usr/include/mkl
 AR = ar
-LIB_SYS =
+LIB_SYS =  -L/usr/lib/x86_64-linux-gnu -Wl,--no-as-needed -lmkl_rt -lpthread -lm -ldl
 # LAPACK and BLAS libraries
 LIB_LPK = -llapack -lblas
-LIB_FFT = fftlib.a
+LIB_FFT =
 SRC_OMP =
 
 #-------------------------------------------------------------------------------
@@ -22,10 +22,10 @@ SRC_MPI =
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-SRC_MKL = mkl_stub.f90
+#SRC_MKL = mkl_stub.f90
 # To enable MKL parallelism, link with the MKL library then uncomment the
 # following line and run 'make clean' followed by 'make'.
-#SRC_MKL =
+SRC_MKL =
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -52,13 +52,13 @@ SRC_libxc = libxcf90.f90 libxcifc.f90
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-SRC_FFT = zfftifc.f90
+#SRC_FFT = zfftifc.f90
 # To use a different FFT library, copy the relevant library or include files to
 # the elk/src directory (eg. mkl_dfti.f90), uncomment the appropriate lines
 # below and run 'make clean' followed by 'make'.
 #SRC_FFT = zfftifc_fftw.f90
 #LIB_FFT = libfftw3.a
-#SRC_FFT = mkl_dfti.f90 zfftifc_mkl.f90
+SRC_FFT = mkl_dfti.f90 zfftifc_mkl.f90
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------

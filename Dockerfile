@@ -1,6 +1,6 @@
 FROM ubuntu:20.04 as base
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get -qq update && apt-get -qq install build-essential liblapack-dev libblas-dev gfortran libomp-dev libopenmpi-dev python
+RUN apt-get -qq update && apt-get -qq install build-essential liblapack-dev libblas-dev gfortran libomp-dev libopenmpi-dev python libmkl-dev
 
 
 FROM base as dep-builder
@@ -22,7 +22,7 @@ COPY --from=dep-builder /app/libxc-5.0.0/src/libxcf90.f90  /app/elk-6.8.4/src/li
 COPY --from=dep-builder /app/usr/lib/libxcf90.a            /app/elk-6.8.4/src/libxcf90.a
 COPY --from=dep-builder /app/usr/lib/libxc.a               /app/elk-6.8.4/src/libxc.a
 COPY --from=dep-builder /app/usr/lib/libwannier.a          /app/elk-6.8.4/src/libwannier.a
-RUN make
+RUN cp /usr/include/mkl/mkl_dfti.f90 src/ && make
 
 CMD ['/bin/bash']
 
