@@ -7,7 +7,7 @@ F77_OPTS = -O3 -ffast-math -funroll-loops -fopenmp
 AR = ar
 LIB_SYS =
 # LAPACK and BLAS libraries
-LIB_LPK = lapack.a blas.a
+LIB_LPK = -llapack -lblas
 LIB_FFT = fftlib.a
 SRC_OMP =
 

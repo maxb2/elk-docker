@@ -4,8 +4,8 @@
 F90 = gfortran
 
 #Add next two lines for parallel postw90. Choose the correct name of the mpi f90 wrapper
-COMMS  = mpi
-MPIF90 = mpif90
+#COMMS  = mpi
+#MPIF90 = mpif90
 
 FCOPTS = -O3
 LDOPTS =
