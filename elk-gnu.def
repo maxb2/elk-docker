@@ -1,0 +1,35 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  libxc-5.0.0 /app/libxc-5.0.0
+  wannier90-3.1.0 /app/wannier90-3.1.0
+  elk-6.8.4 /app/elk-6.8.4
+
+%post
+  export   DEBIAN_FRONTEND=noninteractive
+  apt-get -qq update
+  apt-get -qq install build-essential liblapack-dev libblas-dev gfortran libomp-dev libopenmpi-dev python
+
+  mkdir -p /app/usr
+
+  cd /app/libxc-5.0.0
+  ./configure --prefix='/app/usr'
+  make
+  make check
+  make install
+
+  cd /app/wannier90-3.1.0 &&
+  make &&
+  make lib
+  make test-serial
+  PREFIX='/app/usr' make install
+
+
+  cd /app/elk-6.8.4
+  cp /app/libxc-5.0.0/src/libxcf90.f90 /app/usr/lib/libxcf90.a /app/usr/lib/libxc.a /app/usr/lib/libwannier.a src/
+  make
+  make test
+
+%startscript
+  /bin/bash
